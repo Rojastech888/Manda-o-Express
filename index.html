@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pedidos Cabrera - Express</title>
+    <!-- Tailwind CSS CDN para diseño rápido y responsive -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Ajuste para que el textarea no se vea mal en iOS */
+        textarea { -webkit-appearance: none; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-900 font-sans antialiased">
+
+    <!-- BARRA SUPERIOR -->
+    <header class="bg-white shadow-sm sticky top-0 z-50 border-b border-gray-100">
+        <nav class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <span class="text-3xl">🛒</span>
+                <h1 class="text-2xl font-bold text-green-600">Pedidos<span class="text-gray-800">Cabrera</span></h1>
+            </div>
+            <span class="text-sm font-medium bg-green-50 text-green-700 px-3 py-1 rounded-full border border-green-100">📍 Cabrera, RD</span>
+        </nav>
+    </header>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="max-w-3xl mx-auto px-4 py-8 md:py-12">
+        
+        <!-- ENCABEZADO DE SECCIÓN -->
+        <div class="text-center mb-10">
+            <h2 class="text-3xl md:text-4xl font-extrabold text-gray-950 mb-3">Realiza tu pedido express</h2>
+            <p class="text-lg text-gray-600 max-w-xl mx-auto">Escribe los productos que necesitas de <span class="font-semibold text-gray-800">Supermercado García</span> y te lo enviaremos directo a su WhatsApp.</p>
+        </div>
+
+        <!-- FORMULARIO DE PEDIDO -->
+        <form id="formPedido" class="bg-white p-6 md:p-8 rounded-2xl shadow-lg border border-gray-100 space-y-6">
+            
+            <!-- DATOS DEL CLIENTE -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label for="nombre" class="block text-sm font-semibold text-gray-800 mb-1.5">Tu Nombre completo</label>
+                    <input type="text" id="nombre" name="nombre" required placeholder="Ej. Juan Pérez"
+                        class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-green-200 focus:border-green-400 transition">
+                </div>
+                <div>
+                    <label for="direccion" class="block text-sm font-semibold text-gray-800 mb-1.5">Dirección exacta / Referencia</label>
+                    <input type="text" id="direccion" name="direccion" required placeholder="Ej. Calle Duarte #10, frente a la bomba"
+                        class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-green-200 focus:border-green-400 transition">
+                </div>
+            </div>
+
+            <!-- EL CUADRO MÁGICO DE PRODUCTOS (LA MEJORA) -->
+            <div>
+                <label for="pedidoCompleto" class="block text-sm font-semibold text-gray-800 mb-1.5">¿Qué necesitas del Supermercado?</label>
+                <p class="text-xs text-gray-500 mb-2">Escribe tu lista aquí, un producto por línea (ej: 1 Leche Rica, 2lbs Arroz...)</p>
+                <textarea id="pedidoCompleto" name="pedidoCompleto" required rows="10" 
+                    placeholder="Ejemplo:&#10;1 Leche Rica entera 1L&#10;2 Libras de arroz La Garza&#10;1 Aceite Crisol 16oz&#10;6 Huevos..."
+                    class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-green-200 focus:border-green-400 transition resize-none font-mono text-sm bg-gray-50"></textarea>
+            </div>
+
+            <!-- MÉTODO DE PAGO (Importante para el comercio) -->
+            <div>
+                <label class="block text-sm font-semibold text-gray-800 mb-2">Método de Pago</label>
+                <div class="grid grid-cols-2 gap-4">
+                    <label class="relative flex items-center gap-3 p-4 border border-gray-200 rounded-xl cursor-pointer hover:bg-gray-50 transition peer-checked:border-green-400 peer-checked:bg-green-50">
+                        <input type="radio" name="pago" value="Efectivo" checked class="w-5 h-5 text-green-600 focus:ring-green-400 border-gray-300">
+                        <span class="font-medium text-gray-900">Efectivo</span>
+                    </label>
+                    <label class="relative flex items-center gap-3 p-4 border border-gray-200 rounded-xl cursor-pointer hover:bg-gray-50 transition peer-checked:border-green-400 peer-checked:bg-green-50">
+                        <input type="radio" name="pago" value="Transferencia" class="w-5 h-5 text-green-600 focus:ring-green-400 border-gray-300">
+                        <span class="font-medium text-gray-900">Transferencia</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- BOTÓN DE ENVÍO -->
+            <div class="pt-4">
+                <button type="submit" 
+                    class="w-full flex items-center justify-center gap-3 bg-green-600 hover:bg-green-700 text-white font-bold py-4 px-6 rounded-2xl text-lg transition duration-150 shadow-md hover:shadow-lg transform hover:-translate-y-0.5">
+                    <!-- Icono de WhatsApp (SVG) -->
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.438 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+                    Enviar Pedido por WhatsApp
+                </button>
+            </div>
+        </form>
+
+        <!-- PIE DE PAGINA -->
+        <footer class="mt-16 text-center text-gray-500 text-sm border-t border-gray-100 pt-8">
+            <p>&copy; 2024 Pedidos Cabrera Express. Desarrollado para Cabrera, RD.</p>
+            <p class="mt-1 text-xs">Esta herramienta facilita el envío del mensaje, la confirmación depende del comercio.</p>
+        </footer>
+    </main>
+
+    <!-- LÓGICA DE JAVASCRIPT -->
+    <script>
+        // --- CONFIGURACIÓN ---
+        // Número de WhatsApp del Supermercado García (con código de país 1 para RD)
+        // CAMBIA ESTE NÚMERO por el real del comercio
+        const WHATSAPP_COMERCIO = "18290000000"; 
+        const NOMBRE_COMERCIO = "Supermercado García";
+
+        // --- LÓGICA DEL FORMULARIO ---
+        document.getElementById('formPedido').addEventListener('submit', function(event) {
+            // 1. Evitar que el formulario se envíe de la forma tradicional
+            event.preventDefault();
+
+            // 2. Recopilar los datos del formulario
+            const nombre = document.getElementById('nombre').value;
+            const direccion = document.getElementById('direccion').value;
+            const pedidoCompleto = document.getElementById('pedidoCompleto').value;
+            // Obtener el radio button de pago seleccionado
+            const pago = document.querySelector('input[name="pago"]:checked').value;
+
+            // 3. Estructurar el mensaje para WhatsApp (Usando saltos de línea %0A para la URL)
+            const mensaje = 
+                `*🛒 NUEVO PEDIDO - ${NOMBRE_COMERCIO.toUpperCase()}*%0A%0A` +
+                `*👤 Cliente:* ${nombre}%0A` +
+                `*📍 Dirección:* ${direccion}%0A` +
+                `*💵 Pago:* ${pago}%0A%0A` +
+                `*📝 LISTA DE PEDIDO:*%0A` +
+                `${pedidoCompleto}%0A%0A` +
+                `❓ _Por favor confirmar disponibilidad y tiempo estimado._`;
+
+            // 4. Construir la URL de WhatsApp (wa.me)
+            // Esto funciona tanto en móvil (abre la app) como en PC (WhatsApp Web)
+            const urlWhatsApp = `https://wa.me/${WHATSAPP_COMERCIO}?text=${mensaje}`;
+
+            // 5. Redireccionar al usuario a WhatsApp
+            window.open(urlWhatsApp, '_blank');
+        });
+    </script>
+</body>
+</html>
