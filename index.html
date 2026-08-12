@@ -35,7 +35,7 @@
         <!-- FORMULARIO DE PEDIDO -->
         <form id="formPedido" class="bg-white p-6 md:p-8 rounded-2xl shadow-lg border border-gray-100 space-y-6">
             
-            <!-- BARRA DE SELECCIÓN DE COMERCIO (NUEVO) -->
+            <!-- BARRA DE SELECCIÓN DE COMERCIO -->
             <div>
                 <label for="comercio" class="block text-sm font-bold text-gray-800 mb-2">
                     🏪 ¿A qué negocio deseas pedir?
@@ -45,16 +45,16 @@
                         class="w-full px-4 py-3.5 border-2 border-green-500 bg-green-50/30 rounded-xl font-bold text-gray-800 text-base focus:ring-2 focus:ring-green-300 focus:border-green-600 transition cursor-pointer">
                         <!-- Categoria Supermercados -->
                         <optgroup label="🛒 Supermercados">
-                            <option value="garcia" selected>Supermercado García</option>
-                            <option value="rebeca">Supermercado Rebeca</option>
+                            <option value="garcia" selected>Supermercado García (Tel: 809-589-7472)</option>
+                            <option value="rebeca">Supermercado Rebeca (Tel: 809-589-7025)</option>
                         </optgroup>
                         <!-- Categoria Farmacias -->
                         <optgroup label="💊 Farmacias">
-                            <option value="gbc">Farmacia GBC Cabrera</option>
+                            <option value="gbc">Farmacia GBC Cabrera (Tel: 809-475-4444)</option>
                         </optgroup>
                         <!-- Categoria Licores -->
                         <optgroup label="🍾 Liquor Store">
-                            <option value="lamarca">La Marca Liquor Store</option>
+                            <option value="lamarca">La Marca Liquor Store (Tel: 829-984-3118)</option>
                         </optgroup>
                     </select>
                     <!-- Icono Flecha hacia abajo -->
@@ -68,12 +68,12 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                     <label for="nombre" class="block text-sm font-semibold text-gray-800 mb-1.5">Tu Nombre completo</label>
-                    <input type="text" id="nombre" name="nombre" required placeholder="Ej. Juan Pérez"
+                    <input type="text" id="nombre" name="nombre" required placeholder="Ej. Diogenes Solana"
                         class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-green-200 focus:border-green-400 transition">
                 </div>
                 <div>
                     <label for="direccion" class="block text-sm font-semibold text-gray-800 mb-1.5">Dirección / Referencia de entrega</label>
-                    <input type="text" id="direccion" name="direccion" required placeholder="Ej. Calle Duarte #10, frente a la bomba"
+                    <input type="text" id="direccion" name="direccion" required placeholder="Ej. Calle Duarte #10, Cabrera"
                         class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-green-200 focus:border-green-400 transition">
                 </div>
             </div>
@@ -117,44 +117,38 @@
         </footer>
     </main>
 
-    <!-- LÓGICA DE JAVASCRIPT DINÁMICA -->
+    <!-- LÓGICA CON NÚMEROS REALES INTEGRADOS -->
     <script>
-        // --- DIRECTORIO DE COMERCIOS Y SUS NÚMEROS DE WHATSAPP ---
-        // IMPORTANTE: Sustituye los números '18290000000' por los WhatsApp reales de cada lugar
         const COMERCIOS = {
             "garcia": {
                 nombre: "Supermercado García",
-                whatsapp: "18290000000" 
+                whatsapp: "18292812228" // Número directo de WhatsApp / Pedidos
             },
             "rebeca": {
                 nombre: "Supermercado Rebeca",
-                whatsapp: "18290000000"
+                whatsapp: "18095897025" // Formato internacional +1 para el 809-589-7025
             },
             "gbc": {
                 nombre: "Farmacia GBC Cabrera",
-                whatsapp: "18290000000"
+                whatsapp: "18094754444" // Formato internacional +1 para el 809-475-4444
             },
             "lamarca": {
                 nombre: "La Marca Liquor Store",
-                whatsapp: "18290000000"
+                whatsapp: "18299843118" // Formato internacional +1 para el 829-984-3118
             }
         };
 
-        // --- MANEJO DEL ENVÍO ---
         document.getElementById('formPedido').addEventListener('submit', function(event) {
             event.preventDefault();
 
-            // 1. Identificar el comercio seleccionado
             const comercioKey = document.getElementById('comercio').value;
             const comercioInfo = COMERCIOS[comercioKey];
 
-            // 2. Capturar datos del usuario
             const nombre = document.getElementById('nombre').value;
             const direccion = document.getElementById('direccion').value;
             const pedidoCompleto = document.getElementById('pedidoCompleto').value;
             const pago = document.querySelector('input[name="pago"]:checked').value;
 
-            // 3. Generar mensaje personalizado según el comercio seleccionado
             const mensaje = 
                 `*🛒 NUEVO PEDIDO - ${comercioInfo.nombre.toUpperCase()}*%0A%0A` +
                 `*👤 Cliente:* ${nombre}%0A` +
@@ -164,7 +158,6 @@
                 `${pedidoCompleto}%0A%0A` +
                 `❓ _Por favor confirmar disponibilidad y tiempo de entrega._`;
 
-            // 4. Abrir WhatsApp hacia el número específico del negocio elegido
             const urlWhatsApp = `https://wa.me/${comercioInfo.whatsapp}?text=${mensaje}`;
             window.open(urlWhatsApp, '_blank');
         });
